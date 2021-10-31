@@ -10,9 +10,9 @@ For these benchmarks I have tried to focus on potential real-world-type scenario
 
 ### Config
 
-Floki is benchmarked using the `html5ever` parser.
+Floki is benchmarked using the `fast_html` parser.
 
-Performance characteristics are different for the `mochiweb_html` parser, but I strongly recommend always using the `html5ever` parser unless you're sure malformed HTML won't be a problem.
+Performance characteristics are different for the `mochiweb_html` parser, but I strongly recommend always using the `fast_html` parser unless you're sure malformed HTML won't be a problem.
 
 ### Setup
 
@@ -36,11 +36,11 @@ For XPath, I test both a naive solution that is closely related to the CSS solut
 $ MIX_ENV=prod mix compile
 $ MIX_ENV=prod mix run bench/wiki_links.exs
 Operating System: macOS
-CPU Information: Intel(R) Core(TM) i7-5557U CPU @ 3.10GHz
-Number of Available Cores: 4
-Available memory: 8 GB
-Elixir 1.10.1
-Erlang 22.3.3
+CPU Information: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+Number of Available Cores: 12
+Available memory: 32 GB
+Elixir 1.12.3
+Erlang 24.1.2
 
 Benchmark suite executing with the following configuration:
 warmup: 3 s
@@ -56,24 +56,24 @@ Benchmarking Meeseeks XPath naive...
 Benchmarking Meeseeks XPath optimized...
 
 Name                               ips        average  deviation         median         99th %
-Meeseeks CSS                     85.04       11.76 ms     ±8.55%       11.46 ms       16.75 ms
-Meeseeks XPath optimized         78.01       12.82 ms     ±5.05%       12.63 ms       15.77 ms
-Floki CSS                        77.36       12.93 ms     ±8.32%       12.70 ms       16.45 ms
-Meeseeks XPath naive             61.23       16.33 ms     ±6.61%       16.03 ms       20.19 ms
+Floki CSS                       131.41        7.61 ms    ±11.23%        7.43 ms       10.81 ms
+Meeseeks CSS                    115.80        8.64 ms     ±4.57%        8.52 ms        9.98 ms
+Meeseeks XPath optimized        110.59        9.04 ms     ±4.03%        8.94 ms       10.30 ms
+Meeseeks XPath naive             89.71       11.15 ms     ±6.01%       10.91 ms       13.19 ms
 
 Comparison: 
-Meeseeks CSS                     85.04
-Meeseeks XPath optimized         78.01 - 1.09x slower +1.06 ms
-Floki CSS                        77.36 - 1.10x slower +1.17 ms
-Meeseeks XPath naive             61.23 - 1.39x slower +4.57 ms
+Floki CSS                       131.41
+Meeseeks CSS                    115.80 - 1.13x slower +1.03 ms
+Meeseeks XPath optimized        110.59 - 1.19x slower +1.43 ms
+Meeseeks XPath naive             89.71 - 1.46x slower +3.54 ms
 
 Memory usage statistics:
 
 Name                        Memory usage
-Meeseeks CSS                     0.77 MB
-Meeseeks XPath optimized         1.09 MB - 1.41x memory usage +0.32 MB
-Floki CSS                        3.11 MB - 4.05x memory usage +2.35 MB
-Meeseeks XPath naive             2.15 MB - 2.80x memory usage +1.38 MB
+Floki CSS                        2.95 MB
+Meeseeks CSS                     0.77 MB - 0.26x memory usage -2.17947 MB
+Meeseeks XPath optimized         1.09 MB - 0.37x memory usage -1.85918 MB
+Meeseeks XPath naive             2.16 MB - 0.73x memory usage -0.79591 MB
 
 **All measurements for memory usage were the same**
 ```
@@ -94,11 +94,11 @@ The test data used is 349Kb and parses to ~6,900 nodes.
 $ MIX_ENV=prod mix compile
 $ MIX_ENV=prod mix run bench/trending_js.exs
 Operating System: macOS
-CPU Information: Intel(R) Core(TM) i7-5557U CPU @ 3.10GHz
-Number of Available Cores: 4
-Available memory: 8 GB
-Elixir 1.10.1
-Erlang 22.3.3
+CPU Information: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+Number of Available Cores: 12
+Available memory: 32 GB
+Elixir 1.12.3
+Erlang 24.1.2
 
 Benchmark suite executing with the following configuration:
 warmup: 3 s
@@ -113,21 +113,21 @@ Benchmarking Meeseeks CSS ...
 Benchmarking Meeseeks XPath...
 
 Name                     ips        average  deviation         median         99th %
-Meeseeks CSS           23.22       43.07 ms     ±2.73%       42.79 ms       47.22 ms
-Meeseeks XPath         19.47       51.35 ms     ±4.03%       50.77 ms       60.82 ms
-Floki CSS              14.01       71.39 ms     ±3.85%       71.31 ms       83.36 ms
+Meeseeks CSS           33.24       30.08 ms     ±4.60%       29.82 ms       34.56 ms
+Meeseeks XPath         28.08       35.61 ms     ±3.69%       35.36 ms       39.65 ms
+Floki CSS              10.82       92.41 ms    ±21.73%       97.75 ms      110.62 ms
 
 Comparison: 
-Meeseeks CSS           23.22
-Meeseeks XPath         19.47 - 1.19x slower +8.28 ms
-Floki CSS              14.01 - 1.66x slower +28.32 ms
+Meeseeks CSS           33.24
+Meeseeks XPath         28.08 - 1.18x slower +5.52 ms
+Floki CSS              10.82 - 3.07x slower +62.33 ms
 
 Memory usage statistics:
 
 Name              Memory usage
 Meeseeks CSS           3.66 MB
 Meeseeks XPath         6.57 MB - 1.80x memory usage +2.91 MB
-Floki CSS             22.23 MB - 6.08x memory usage +18.57 MB
+Floki CSS             15.23 MB - 4.16x memory usage +11.57 MB
 
 **All measurements for memory usage were the same**
 ```
